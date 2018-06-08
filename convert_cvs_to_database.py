@@ -31,6 +31,26 @@ def convert_csv_to_database():
     conn.commit()
 
 
+def query_database(sql):
+    # Connect to database
+    conn = sqlite3.connect('database_name.db')
+    cursor = conn.cursor()
+    # Query database
+    cursor.execute(sql)
+    # Print data
+    return cursor.fetchall()
+
+
+def query_database_print(sql):
+    # Connect to database
+    conn = sqlite3.connect('database_name.db')
+    cursor = conn.cursor()
+    # Query database
+    cursor.execute(sql)
+    # Print data
+    print(cursor.fetchall())
+
+
 def query_database_export_to_excel(sql, file_name, excel_sheet_name, start_row, start_col):
     # Connect to database
     conn = sqlite3.connect('database_name.db')
