@@ -78,6 +78,15 @@ def query_database_export_to_csv(sql, file_name):  # Define file name as string 
     # csv_file.close()
 
 
+def main():
+    print("Testing...")
+    convert_csv_to_database()
+    query_database_print(test_query)
+    query_database_export_to_excel(test_query, "test.xlsx", "Test_Sheet", 0, 0)
+    query_database_export_to_csv(test_query, "test.csv")
+
+
 # Run program.
 if __name__ == "__main__":
-    convert_csv_to_database()
+    main()
+
