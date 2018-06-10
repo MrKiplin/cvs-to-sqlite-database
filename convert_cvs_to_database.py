@@ -1,7 +1,3 @@
-# Description:
-# Author: Theodore Jones.
-# Version: 1.0.2
-
 import csv
 import sqlite3
 
@@ -37,7 +33,7 @@ def query_database(sql):
     cursor = conn.cursor()
     # Query database
     cursor.execute(sql)
-    # Print data
+    # Return data
     return cursor.fetchall()
 
 
@@ -75,7 +71,6 @@ def query_database_export_to_csv(sql, file_name):  # Define file name as string 
     with open(file_name, 'w', newline='') as new_file:
         csv_writer = csv.writer(new_file)
         csv_writer.writerows(query_data)
-    # csv_file.close()
 
 
 def main():
