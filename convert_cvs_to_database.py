@@ -73,12 +73,23 @@ def query_database_export_to_csv(sql, file_name):  # Define file name as string 
         csv_writer.writerows(query_data)
 
 
+def close_database():
+    # Connect to database.
+    conn = sqlite3.connect('database_name.db')
+    cursor = conn.cursor()
+    # Drop tables.
+    cursor.execute("""DROP TABLE table_name""")
+    # Close database connection.
+    conn.close()
+
+
 def main():
     print("Testing...")
     convert_csv_to_database()
     query_database_print(test_query)
     query_database_export_to_excel(test_query, "test.xlsx", "Test_Sheet", 0, 0)
     query_database_export_to_csv(test_query, "test.csv")
+    close_database()
 
 
 # Run program.
