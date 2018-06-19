@@ -1,5 +1,9 @@
 import csv
 import sqlite3
+import os
+import shutil
+import datetime
+from datetime import date, timedelta
 
 import pandas as pd
 from query_library import *
@@ -82,7 +86,23 @@ def close_database():
     # Close database connection.
     conn.close()
 
+	
+def archive_excel_files(file_id):
+    # Get the current file directory.
+    dir_path = os.getcwd()
+    arc_path = dir_path + '\\archive'
+	# Iterate through files and move to desired folder.
+    i = 0
+    while (i < len(file_id)):
+		# Select folder by file ID.
+        file_archive_path = arc_path + '\\' + broker_id[i]
+        # Select file by file ID.
+        file_name = file_id[i] + '.xlsx'
+		# Move file.
+        shutil.move(dir_path + '\\' + file_name, file_archive_path)
+        i = i + 1
 
+	
 def main():
     print("Testing...")
     convert_csv_to_database()
@@ -90,6 +110,7 @@ def main():
     query_database_export_to_excel(test_query, "test.xlsx", "Test_Sheet", 0, 0)
     query_database_export_to_csv(test_query, "test.csv")
     close_database()
+	Print("Test complete")
 
 
 # Run program.
