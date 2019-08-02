@@ -21,7 +21,8 @@ def convert_csv_to_database():
     # Load CSV file into CSV reader.
     with open('CSV_file_name.csv', 'r') as csv_file:
         # Iterate through CSV file and remove NULL byts. NOTE: NULL byts cause code error.
-        csv_reader = csv.reader(null_byts.replace('\0', '') for null_byts in csv_file)
+        csv_reader = csv.reader(null_byts.replace('\0', '')
+                                for null_byts in csv_file)
         # Iterate through CSV file and insert values into database.
         for database_values in csv_reader:
             cursor.execute("""INSERT INTO table_name
@@ -59,12 +60,14 @@ def query_database_export_to_excel(sql, file_name, excel_sheet_name, start_row, 
     # Create an Excel file using XlsxWriter as the engine
     writer = pd.ExcelWriter(file_name, engine='xlsxwriter')
     # Convert the dataframe to an XlsxWriter Excel object and write to sheets
-    dataframe.to_excel(writer, sheet_name=excel_sheet_name, index=False, na_rep='NULL', startrow=start_row, startcol=start_col)
+    dataframe.to_excel(writer, sheet_name=excel_sheet_name, index=False,
+                       na_rep='NULL', startrow=start_row, startcol=start_col)
     # Close the Excel writer and output the Excel file.
     writer.save()
 
 
-def query_database_export_to_csv(sql, file_name):  # Define file name as string i.e "file_name.csv"
+# Define file name as string i.e "file_name.csv"
+def query_database_export_to_csv(sql, file_name):
     # Connect to database
     conn = sqlite3.connect('database_name.db')
     cursor = conn.cursor()
@@ -86,23 +89,7 @@ def close_database():
     # Close database connection.
     conn.close()
 
-	
-def archive_excel_files(file_id):
-    # Get the current file directory.
-    dir_path = os.getcwd()
-    arc_path = dir_path + '\\archive'
-	# Iterate through files and move to desired folder.
-    i = 0
-    while (i < len(file_id)):
-		# Select folder by file ID.
-        file_archive_path = arc_path + '\\' + broker_id[i]
-        # Select file by file ID.
-        file_name = file_id[i] + '.xlsx'
-		# Move file.
-        shutil.move(dir_path + '\\' + file_name, file_archive_path)
-        i = i + 1
 
-	
 def main():
     print("Testing...")
     convert_csv_to_database()
@@ -110,10 +97,9 @@ def main():
     query_database_export_to_excel(test_query, "test.xlsx", "Test_Sheet", 0, 0)
     query_database_export_to_csv(test_query, "test.csv")
     close_database()
-	Print("Test complete")
+    print("Test complete")
 
 
 # Run program.
 if __name__ == "__main__":
     main()
-
